@@ -1,4 +1,4 @@
-package nextstep.member.domain;
+package nextstep.auth.authentication;
 
 
 import java.util.List;
@@ -8,10 +8,6 @@ public class LoginMember {
     private String password;
     private List<String> authorities;
 
-    public static LoginMember of(Member member) {
-        return new LoginMember(member.getEmail(), member.getPassword(), member.getRoles());
-    }
-
     public static LoginMember of(String email, List<String> authorities) {
         return new LoginMember(email, null, authorities);
     }
@@ -20,7 +16,7 @@ public class LoginMember {
         return new LoginMember();
     }
 
-    public LoginMember() {
+    private LoginMember() {
     }
 
     public LoginMember(String email, String password, List<String> authorities) {
