@@ -1,5 +1,6 @@
 package nextstep.auth;
 
+import nextstep.auth.application.LoginMemberService;
 import nextstep.auth.authentication.BasicAuthenticationConverter;
 import nextstep.auth.authentication.BasicAuthenticationFilter;
 import nextstep.auth.authentication.BearerAuthenticationConverter;
@@ -11,7 +12,6 @@ import nextstep.auth.authorization.AuthenticationPrincipalArgumentResolver;
 import nextstep.auth.context.SecurityContextPersistenceFilter;
 import nextstep.auth.token.JwtTokenProvider;
 import nextstep.auth.token.TokenAuthenticationInterceptor;
-import nextstep.member.application.LoginMemberService;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -20,8 +20,9 @@ import java.util.List;
 
 @Configuration
 public class AuthConfig implements WebMvcConfigurer {
-    private LoginMemberService loginMemberService;
-    private JwtTokenProvider jwtTokenProvider;
+
+    private final LoginMemberService loginMemberService;
+    private final JwtTokenProvider jwtTokenProvider;
 
     public AuthConfig(LoginMemberService loginMemberService, JwtTokenProvider jwtTokenProvider) {
         this.loginMemberService = loginMemberService;

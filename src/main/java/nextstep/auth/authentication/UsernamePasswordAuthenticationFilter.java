@@ -1,8 +1,8 @@
 package nextstep.auth.authentication;
 
+import nextstep.auth.application.LoginMemberService;
 import nextstep.auth.context.Authentication;
 import nextstep.auth.context.SecurityContextHolder;
-import nextstep.member.application.LoginMemberService;
 import nextstep.member.domain.LoginMember;
 
 import javax.servlet.http.HttpServletResponse;

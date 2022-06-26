@@ -1,9 +1,9 @@
 package nextstep.auth.token;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import nextstep.auth.application.LoginMemberService;
 import nextstep.auth.authentication.AuthenticationConverter;
 import nextstep.auth.authentication.NonChainAuthenticationInterceptor;
-import nextstep.member.application.LoginMemberService;
 import nextstep.member.domain.LoginMember;
 import org.springframework.http.MediaType;
 

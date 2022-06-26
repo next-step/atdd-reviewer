@@ -1,8 +1,8 @@
 package nextstep.auth.authentication;
 
+import nextstep.auth.application.LoginMemberService;
 import nextstep.auth.context.Authentication;
 import nextstep.auth.context.SecurityContextHolder;
-import nextstep.member.application.LoginMemberService;
 import nextstep.member.domain.LoginMember;
 
 public class BasicAuthenticationFilter extends ChainAuthenticationInterceptor {
@@ -17,7 +17,7 @@ public class BasicAuthenticationFilter extends ChainAuthenticationInterceptor {
 
     public void afterAuthentication(AuthenticationToken token) {
 
-        LoginMember loginMember = loginMemberService.loadUserByUsername(token.getPrincipal());
+        LoginMember loginMember = loginMemberService.findByUsername(token.getPrincipal());
         if (loginMember == null) {
             throw new AuthenticationException();
         }

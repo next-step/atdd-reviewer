@@ -1,6 +1,6 @@
 package nextstep.auth.authentication;
 
-import nextstep.member.application.LoginMemberService;
+import nextstep.auth.application.LoginMemberService;
 import nextstep.member.domain.LoginMember;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -24,7 +24,7 @@ public abstract class NonChainAuthenticationInterceptor implements HandlerInterc
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         AuthenticationToken authentication = authenticationConverter.convert(request);
 
-        LoginMember loginMember = loginMemberService.loadUserByUsername(authentication.getPrincipal());
+        LoginMember loginMember = loginMemberService.findByUsername(authentication.getPrincipal());
 
         if (loginMember == null) {
             throw new AuthenticationException();
