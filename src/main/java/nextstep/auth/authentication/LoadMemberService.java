@@ -1,6 +1,6 @@
 package nextstep.auth.authentication;
 
-public interface ILoginMemberService {
+public interface LoadMemberService {
 
 	LoginMember loadMemberByEmail(String email);
 }

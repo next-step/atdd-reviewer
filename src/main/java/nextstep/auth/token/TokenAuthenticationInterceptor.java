@@ -7,15 +7,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import nextstep.auth.authentication.AuthenticationException;
 import nextstep.auth.authentication.ChainingAuthenticationInterceptor;
-import nextstep.auth.authentication.ILoginMemberService;
+import nextstep.auth.authentication.LoadMemberService;
 import nextstep.auth.authentication.LoginMember;
 import org.springframework.http.MediaType;
 
 public class TokenAuthenticationInterceptor extends ChainingAuthenticationInterceptor {
-    private ILoginMemberService loginMemberService;
+    private LoadMemberService loginMemberService;
     private JwtTokenProvider jwtTokenProvider;
 
-    public TokenAuthenticationInterceptor(ILoginMemberService loginMemberService, JwtTokenProvider jwtTokenProvider) {
+    public TokenAuthenticationInterceptor(LoadMemberService loginMemberService, JwtTokenProvider jwtTokenProvider) {
         this.loginMemberService = loginMemberService;
         this.jwtTokenProvider = jwtTokenProvider;
     }

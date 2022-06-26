@@ -10,9 +10,9 @@ public class UsernamePasswordAuthenticationFilter extends ChainingAuthentication
     public static final String USERNAME_FIELD = "username";
     public static final String PASSWORD_FIELD = "password";
 
-    private ILoginMemberService loginMemberService;
+    private LoadMemberService loginMemberService;
 
-    public UsernamePasswordAuthenticationFilter(ILoginMemberService loginMemberService) {
+    public UsernamePasswordAuthenticationFilter(LoadMemberService loginMemberService) {
         this.loginMemberService = loginMemberService;
     }
 

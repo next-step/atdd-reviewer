@@ -7,9 +7,9 @@ import nextstep.auth.context.SecurityContextHolder;
 import org.apache.tomcat.util.codec.binary.Base64;
 
 public class BasicAuthenticationFilter extends NonChainingAuthenticationInterceptor {
-    private ILoginMemberService loginMemberService;
+    private LoadMemberService loginMemberService;
 
-    public BasicAuthenticationFilter(ILoginMemberService loginMemberService) {
+    public BasicAuthenticationFilter(LoadMemberService loginMemberService) {
         this.loginMemberService = loginMemberService;
     }
 
