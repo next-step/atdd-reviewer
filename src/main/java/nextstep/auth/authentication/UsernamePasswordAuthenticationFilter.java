@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 public class UsernamePasswordAuthenticationFilter extends NonChainAuthenticationInterceptor {
 
     public UsernamePasswordAuthenticationFilter(LoginMemberService loginMemberService,
-                                                AuthenticationConverter authenticationGenerator) {
-        super(loginMemberService, authenticationGenerator);
+                                                AuthenticationConverter authenticationConverter) {
+        super(loginMemberService, authenticationConverter);
     }
 
     @Override

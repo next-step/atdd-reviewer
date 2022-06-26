@@ -14,8 +14,8 @@ public class TokenAuthenticationInterceptor extends NonChainAuthenticationInterc
     private final JwtTokenProvider jwtTokenProvider;
 
     public TokenAuthenticationInterceptor(LoginMemberService loginMemberService, JwtTokenProvider jwtTokenProvider,
-                                          AuthenticationConverter authenticationGenerator) {
-        super(loginMemberService, authenticationGenerator);
+                                          AuthenticationConverter authenticationConverter) {
+        super(loginMemberService, authenticationConverter);
         this.jwtTokenProvider = jwtTokenProvider;
     }
 

@@ -10,19 +10,19 @@ import javax.servlet.http.HttpServletResponse;
 public abstract class NonChainAuthenticationInterceptor implements HandlerInterceptor {
 
     private final LoginMemberService loginMemberService;
-    private final AuthenticationConverter authenticationGenerator;
+    private final AuthenticationConverter authenticationConverter;
 
     public NonChainAuthenticationInterceptor(LoginMemberService loginMemberService,
-                                             AuthenticationConverter authenticationGenerator) {
+                                             AuthenticationConverter authenticationConverter) {
         this.loginMemberService = loginMemberService;
-        this.authenticationGenerator = authenticationGenerator;
+        this.authenticationConverter = authenticationConverter;
     }
 
     public abstract void afterAuthentication(LoginMember loginMember, HttpServletResponse response) throws Exception;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        AuthenticationToken authentication = authenticationGenerator.generateAuthentication(request);
+        AuthenticationToken authentication = authenticationConverter.generateAuthentication(request);
 
         LoginMember loginMember = loginMemberService.loadUserByUsername(authentication.getPrincipal());
 
