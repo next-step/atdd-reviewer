@@ -22,7 +22,7 @@ public abstract class NonChainAuthenticationInterceptor implements HandlerInterc
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        AuthenticationToken authentication = authenticationConverter.generateAuthentication(request);
+        AuthenticationToken authentication = authenticationConverter.convert(request);
 
         LoginMember loginMember = loginMemberService.loadUserByUsername(authentication.getPrincipal());
 

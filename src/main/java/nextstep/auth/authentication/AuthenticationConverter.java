@@ -4,6 +4,6 @@ import javax.servlet.http.HttpServletRequest;
 
 public interface AuthenticationConverter {
 
-    AuthenticationToken generateAuthentication(HttpServletRequest request) throws Exception;
+    AuthenticationToken convert(HttpServletRequest request) throws Exception;
 
 }

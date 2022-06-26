@@ -14,13 +14,13 @@ class FormAuthenticationConverterTest {
 
     @DisplayName("요청에서 mail, password 읽고 인증 정보를 생성할 수 있다.")
     @Test
-    void generateAuthentication() {
+    void convert() {
         // given
         request = 인증_요청_mock();
         FormAuthenticationConverter converter = new FormAuthenticationConverter();
 
         // when
-        AuthenticationToken authentication = converter.generateAuthentication(request);
+        AuthenticationToken authentication = converter.convert(request);
 
         // then
         인증_검증(authentication);

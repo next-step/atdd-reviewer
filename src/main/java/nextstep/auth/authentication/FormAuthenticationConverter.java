@@ -9,7 +9,7 @@ public final class FormAuthenticationConverter implements AuthenticationConverte
     private static final String PASSWORD_FIELD = "password";
 
     @Override
-    public AuthenticationToken generateAuthentication(HttpServletRequest request) {
+    public AuthenticationToken convert(HttpServletRequest request) {
         Map<String, String[]> paramMap = request.getParameterMap();
         String username = paramMap.get(USERNAME_FIELD)[0];
         String password = paramMap.get(PASSWORD_FIELD)[0];

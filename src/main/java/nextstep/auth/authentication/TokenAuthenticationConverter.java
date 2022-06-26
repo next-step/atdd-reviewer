@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 public class TokenAuthenticationConverter implements AuthenticationConverter {
 
     @Override
-    public AuthenticationToken generateAuthentication(HttpServletRequest request) throws Exception {
+    public AuthenticationToken convert(HttpServletRequest request) throws Exception {
         String content = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
         TokenRequest tokenRequest = new ObjectMapper().readValue(content, TokenRequest.class);
 
