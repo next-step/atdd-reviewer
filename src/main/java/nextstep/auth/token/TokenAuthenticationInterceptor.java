@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import nextstep.auth.application.LoginMemberService;
 import nextstep.auth.authentication.AuthenticationConverter;
 import nextstep.auth.authentication.NonChainAuthenticationInterceptor;
-import nextstep.member.domain.LoginMember;
+import nextstep.auth.domain.LoginUser;
 import org.springframework.http.MediaType;
 
 import javax.servlet.http.HttpServletResponse;
@@ -20,7 +20,7 @@ public class TokenAuthenticationInterceptor extends NonChainAuthenticationInterc
     }
 
     @Override
-    public void afterAuthentication(LoginMember loginMember, HttpServletResponse response) throws Exception {
+    public void afterAuthentication(LoginUser loginMember, HttpServletResponse response) throws Exception {
         String token = jwtTokenProvider.createToken(loginMember.getEmail(), loginMember.getAuthorities());
         TokenResponse tokenResponse = new TokenResponse(token);
 

@@ -3,7 +3,7 @@ package nextstep.auth.authentication;
 import nextstep.auth.application.LoginMemberService;
 import nextstep.auth.context.Authentication;
 import nextstep.auth.context.SecurityContextHolder;
-import nextstep.member.domain.LoginMember;
+import nextstep.auth.domain.LoginUser;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,7 +15,7 @@ public class UsernamePasswordAuthenticationFilter extends NonChainAuthentication
     }
 
     @Override
-    public void afterAuthentication(LoginMember loginMember, HttpServletResponse response) {
+    public void afterAuthentication(LoginUser loginMember, HttpServletResponse response) {
         Authentication authentication = new Authentication(loginMember.getEmail(), loginMember.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
