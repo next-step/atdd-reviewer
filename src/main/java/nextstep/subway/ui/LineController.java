@@ -1,12 +1,12 @@
 package nextstep.subway.ui;
 
-import nextstep.auth.secured.Secured;
 import nextstep.subway.applicaion.LineService;
 import nextstep.subway.applicaion.dto.LineRequest;
 import nextstep.subway.applicaion.dto.LineResponse;
 import nextstep.subway.applicaion.dto.SectionRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import support.auth.authorization.secured.Secured;
 
 import java.net.URI;
 import java.util.List;
