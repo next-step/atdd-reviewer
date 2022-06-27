@@ -1,22 +1,23 @@
 package nextstep.auth.ui.securityAuthentication;
 
+import nextstep.auth.application.UserDetail;
+import nextstep.auth.application.UserDetailService;
 import nextstep.auth.authentication.AuthenticationException;
 import nextstep.auth.authentication.AuthenticationToken;
 import nextstep.auth.authentication.AuthorizationExtractor;
 import nextstep.auth.authentication.AuthorizationType;
 import nextstep.auth.context.Authentication;
 import nextstep.member.application.LoginMemberService;
-import nextstep.member.domain.LoginMember;
 import org.apache.tomcat.util.codec.binary.Base64;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class BasicAuthenticationInterceptor extends SecurityAuthenticationInterceptor {
-    private final LoginMemberService loginMemberService;
+    private final UserDetailService userDetailService;
 
-    public BasicAuthenticationInterceptor(LoginMemberService loginMemberService) {
-        this.loginMemberService = loginMemberService;
+    public BasicAuthenticationInterceptor(UserDetailService userDetailService) {
+        this.userDetailService = userDetailService;
     }
 
     @Override
@@ -31,16 +32,16 @@ public class BasicAuthenticationInterceptor extends SecurityAuthenticationInterc
 
             AuthenticationToken token = new AuthenticationToken(principal, credentials);
 
-            LoginMember loginMember = loginMemberService.loadUserByUsername(token.getPrincipal());
-            if (loginMember == null) {
+            UserDetail userDetail = userDetailService.loadUserByUserName(token.getPrincipal());
+            if (userDetail == null) {
                 throw new AuthenticationException();
             }
 
-            if (!loginMember.checkPassword(token.getCredentials())) {
+            if (!userDetail.checkPassword(token.getCredentials())) {
                 throw new AuthenticationException();
             }
 
-            Authentication authentication = new Authentication(loginMember.getEmail(), loginMember.getAuthorities());
+            Authentication authentication = new Authentication(userDetail.getEmail(), userDetail.getAuthorities());
 
             afterCompletion(request, response, authentication);
 

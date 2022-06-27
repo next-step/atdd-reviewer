@@ -1,5 +1,6 @@
 package nextstep.auth;
 
+import nextstep.auth.application.UserDetailService;
 import nextstep.auth.ui.authentication.TokenAuthenticationInterceptor;
 import nextstep.auth.ui.authentication.UsernamePasswordAuthenticationInterceptor;
 import nextstep.auth.ui.convert.SessionAuthenticationConverter;
@@ -18,7 +19,7 @@ import java.util.List;
 
 @Configuration
 public class AuthConfig implements WebMvcConfigurer {
-    private final LoginMemberService loginMemberService;
+    private final UserDetailService userDetailService;
     private final JwtTokenProvider jwtTokenProvider;
 
     private final SessionAuthenticationConverter sessionAuthenticationConverter;
@@ -26,7 +27,7 @@ public class AuthConfig implements WebMvcConfigurer {
     private final TokenAuthenticationConverter tokenAuthenticationConverter;
 
     public AuthConfig(LoginMemberService loginMemberService, JwtTokenProvider jwtTokenProvider, SessionAuthenticationConverter sessionAuthenticationConverter, TokenAuthenticationConverter tokenAuthenticationConverter) {
-        this.loginMemberService = loginMemberService;
+        this.userDetailService = loginMemberService;
         this.jwtTokenProvider = jwtTokenProvider;
         this.sessionAuthenticationConverter = sessionAuthenticationConverter;
         this.tokenAuthenticationConverter = tokenAuthenticationConverter;
@@ -35,9 +36,9 @@ public class AuthConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new SecurityContextPersistenceFilter());
-        registry.addInterceptor(new UsernamePasswordAuthenticationInterceptor(loginMemberService, sessionAuthenticationConverter)).addPathPatterns("/login/form");
-        registry.addInterceptor(new TokenAuthenticationInterceptor(loginMemberService, tokenAuthenticationConverter, jwtTokenProvider)).addPathPatterns("/login/token");
-        registry.addInterceptor(new BasicAuthenticationInterceptor(loginMemberService));
+        registry.addInterceptor(new UsernamePasswordAuthenticationInterceptor(userDetailService, sessionAuthenticationConverter)).addPathPatterns("/login/form");
+        registry.addInterceptor(new TokenAuthenticationInterceptor(userDetailService, tokenAuthenticationConverter, jwtTokenProvider)).addPathPatterns("/login/token");
+        registry.addInterceptor(new BasicAuthenticationInterceptor(userDetailService));
         registry.addInterceptor(new BearerTokenAuthenticationInterceptor(jwtTokenProvider));
     }
 
