@@ -12,7 +12,7 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletResponse;
 import nextstep.auth.authentication.UserDetailService;
 import nextstep.auth.token.JwtTokenProvider;
-import nextstep.auth.token.TokenAuthenticationInterceptor2;
+import nextstep.auth.token.TokenAuthenticationInterceptor;
 import nextstep.auth.token.TokenRequest;
 import nextstep.member.domain.LoginMember;
 import nextstep.member.domain.Member;
@@ -31,13 +31,13 @@ class TokenAuthenticationInterceptorTest {
 
     private UserDetailService loginMemberService;
     private JwtTokenProvider jwtTokenProvider;
-    private TokenAuthenticationInterceptor2 interceptor;
+    private TokenAuthenticationInterceptor interceptor;
 
     @BeforeEach
     void setUp() {
         loginMemberService = mock(UserDetailService.class);
         jwtTokenProvider = mock(JwtTokenProvider.class);
-        interceptor = new TokenAuthenticationInterceptor2(loginMemberService, jwtTokenProvider);
+        interceptor = new TokenAuthenticationInterceptor(loginMemberService, jwtTokenProvider);
     }
 
     @DisplayName("이메일이 일치하는 회원이 없는 경우 인증 예외 발생")

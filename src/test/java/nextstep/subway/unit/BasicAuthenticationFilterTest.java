@@ -7,7 +7,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import nextstep.auth.authentication.BasicAuthenticationFilter2;
+import nextstep.auth.authentication.BasicAuthenticationFilter;
 import nextstep.auth.authentication.UserDetailService;
 import nextstep.auth.authentication.UserDetails;
 import nextstep.auth.context.SecurityContextHolder;
@@ -26,12 +26,12 @@ class BasicAuthenticationFilterTest {
     private static final String BASIC_TOKEN = "BasicZW1haWxAZW1haWwuY29tOnBhc3N3b3Jk";
 
     private UserDetailService loginMemberService;
-    private BasicAuthenticationFilter2 filter;
+    private BasicAuthenticationFilter filter;
 
     @BeforeEach
     void setUp() {
         loginMemberService = mock(UserDetailService.class);
-        filter = new BasicAuthenticationFilter2(loginMemberService);
+        filter = new BasicAuthenticationFilter(loginMemberService);
     }
 
     @DisplayName("유효하지 않은 경우 인증 예외 발생")

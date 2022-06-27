@@ -7,7 +7,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import nextstep.auth.authentication.BearerTokenAuthenticationFilter2;
+import nextstep.auth.authentication.BearerTokenAuthenticationFilter;
 import nextstep.auth.context.SecurityContextHolder;
 import nextstep.auth.token.JwtTokenProvider;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,12 +22,12 @@ class BearerTokenAuthenticationFilterTest {
     public static final String JWT_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIiLCJuYW1lIjoiSm9obiBEb2UiLCJpYXQiOjE1MTYyMzkwMjJ9.ih1aovtQShabQ7l0cINw4k1fagApg3qLWiB8Kt59Lno";
 
     private JwtTokenProvider jwtTokenProvider;
-    private BearerTokenAuthenticationFilter2 filter;
+    private BearerTokenAuthenticationFilter filter;
 
     @BeforeEach
     void setUp() {
         jwtTokenProvider = mock(JwtTokenProvider.class);
-        filter = new BearerTokenAuthenticationFilter2(jwtTokenProvider);
+        filter = new BearerTokenAuthenticationFilter(jwtTokenProvider);
     }
 
     @DisplayName("유효하지 않은 경우 인증 예외 발생")

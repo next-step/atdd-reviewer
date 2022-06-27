@@ -9,7 +9,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import nextstep.auth.authentication.UserDetailService;
-import nextstep.auth.authentication.UsernamePasswordAuthenticationFilter2;
+import nextstep.auth.authentication.UsernamePasswordAuthenticationFilter;
 import nextstep.auth.context.SecurityContext;
 import nextstep.auth.context.SecurityContextHolder;
 import nextstep.member.domain.LoginMember;
@@ -26,12 +26,12 @@ class UsernamePasswordAuthenticationFilterTest {
     private static final String PASSWORD = "password";
 
     private UserDetailService loginMemberService;
-    private UsernamePasswordAuthenticationFilter2 filter;
+    private UsernamePasswordAuthenticationFilter filter;
 
     @BeforeEach
     void setUp() {
         loginMemberService = mock(UserDetailService.class);
-        filter = new UsernamePasswordAuthenticationFilter2(loginMemberService);
+        filter = new UsernamePasswordAuthenticationFilter(loginMemberService);
     }
 
     @DisplayName("이메일이 일치하는 회원이 없는 경우 인증 예외 발생")
