@@ -1,6 +1,6 @@
 package nextstep.auth.authentication;
 
-import nextstep.auth.application.LoginMemberService;
+import nextstep.auth.application.AuthenticationUserService;
 import nextstep.auth.domain.LoginUser;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -9,12 +9,12 @@ import javax.servlet.http.HttpServletResponse;
 
 public abstract class NonChainAuthenticationInterceptor implements HandlerInterceptor {
 
-    private final LoginMemberService loginMemberService;
+    private final AuthenticationUserService authenticationUserService;
     private final AuthenticationConverter authenticationConverter;
 
-    public NonChainAuthenticationInterceptor(LoginMemberService loginMemberService,
+    public NonChainAuthenticationInterceptor(AuthenticationUserService authenticationUserService,
                                              AuthenticationConverter authenticationConverter) {
-        this.loginMemberService = loginMemberService;
+        this.authenticationUserService = authenticationUserService;
         this.authenticationConverter = authenticationConverter;
     }
 
@@ -24,17 +24,17 @@ public abstract class NonChainAuthenticationInterceptor implements HandlerInterc
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         AuthenticationToken authentication = authenticationConverter.convert(request);
 
-        LoginUser loginMember = loginMemberService.findByUsername(authentication.getPrincipal());
+        LoginUser loginUser = authenticationUserService.loadUserByUsername(authentication.getPrincipal());
 
-        if (loginMember == null) {
+        if (loginUser == null) {
             throw new AuthenticationException();
         }
 
-        if (!loginMember.checkPassword(authentication.getCredentials())) {
+        if (!loginUser.checkPassword(authentication.getCredentials())) {
             throw new AuthenticationException();
         }
 
-        afterAuthentication(loginMember, response);
+        afterAuthentication(loginUser, response);
 
         return false;
     }

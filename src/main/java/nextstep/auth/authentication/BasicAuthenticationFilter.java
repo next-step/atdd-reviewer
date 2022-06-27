@@ -1,35 +1,33 @@
 package nextstep.auth.authentication;
 
-import nextstep.auth.application.LoginMemberService;
+import nextstep.auth.application.AuthenticationUserService;
 import nextstep.auth.context.Authentication;
 import nextstep.auth.context.SecurityContextHolder;
 import nextstep.auth.domain.LoginUser;
 
 public class BasicAuthenticationFilter extends ChainAuthenticationInterceptor {
 
-    private final LoginMemberService loginMemberService;
+    private final AuthenticationUserService authenticationUserService;
 
-    public BasicAuthenticationFilter(LoginMemberService loginMemberService,
+    public BasicAuthenticationFilter(AuthenticationUserService loginMemberService,
                                      AuthenticationConverter authenticationConverter) {
         super(authenticationConverter);
-        this.loginMemberService = loginMemberService;
+        this.authenticationUserService = loginMemberService;
     }
 
     public void afterAuthentication(AuthenticationToken token) {
-
-        LoginUser loginMember = loginMemberService.findByUsername(token.getPrincipal());
-        if (loginMember == null) {
+        LoginUser loginUser = authenticationUserService.loadUserByUsername(token.getPrincipal());
+        if (loginUser == null) {
             throw new AuthenticationException();
         }
 
-        if (!loginMember.checkPassword(token.getCredentials())) {
+        if (!loginUser.checkPassword(token.getCredentials())) {
             throw new AuthenticationException();
         }
 
-        Authentication authentication = new Authentication(loginMember.getEmail(), loginMember.getAuthorities());
+        Authentication authentication = new Authentication(loginUser.getEmail(), loginUser.getAuthorities());
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-
     }
 
 }

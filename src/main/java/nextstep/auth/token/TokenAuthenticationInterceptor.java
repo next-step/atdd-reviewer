@@ -1,7 +1,7 @@
 package nextstep.auth.token;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import nextstep.auth.application.LoginMemberService;
+import nextstep.auth.application.AuthenticationUserService;
 import nextstep.auth.authentication.AuthenticationConverter;
 import nextstep.auth.authentication.NonChainAuthenticationInterceptor;
 import nextstep.auth.domain.LoginUser;
@@ -13,9 +13,10 @@ public class TokenAuthenticationInterceptor extends NonChainAuthenticationInterc
 
     private final JwtTokenProvider jwtTokenProvider;
 
-    public TokenAuthenticationInterceptor(LoginMemberService loginMemberService, JwtTokenProvider jwtTokenProvider,
+    public TokenAuthenticationInterceptor(AuthenticationUserService authenticationUserService,
+                                          JwtTokenProvider jwtTokenProvider,
                                           AuthenticationConverter authenticationConverter) {
-        super(loginMemberService, authenticationConverter);
+        super(authenticationUserService, authenticationConverter);
         this.jwtTokenProvider = jwtTokenProvider;
     }
 

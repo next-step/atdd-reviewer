@@ -31,14 +31,17 @@ public class LoginMember implements LoginUser {
         this.authorities = authorities;
     }
 
+    @Override
     public String getEmail() {
         return email;
     }
 
+    @Override
     public List<String> getAuthorities() {
         return authorities;
     }
 
+    @Override
     public boolean checkPassword(String password) {
         return this.password.equals(password);
     }

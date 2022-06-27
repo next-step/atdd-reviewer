@@ -1,15 +1,13 @@
 package nextstep.member.application;
 
-import nextstep.auth.application.LoginMemberService;
 import nextstep.member.application.dto.MemberRequest;
 import nextstep.member.application.dto.MemberResponse;
-import nextstep.member.domain.LoginMember;
 import nextstep.member.domain.Member;
 import nextstep.member.domain.MemberRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MemberService implements LoginMemberService {
+public class MemberService {
     private MemberRepository memberRepository;
 
     public MemberService(MemberRepository memberRepository) {
@@ -47,11 +45,6 @@ public class MemberService implements LoginMemberService {
 
     public void deleteMember(String email) {
         memberRepository.deleteByEmail(email);
-    }
-
-    public LoginMember findByUsername(String email) {
-        Member member = memberRepository.findByEmail(email).orElseThrow(RuntimeException::new);
-        return LoginMember.of(member);
     }
 
 }

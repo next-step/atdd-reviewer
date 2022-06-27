@@ -7,7 +7,7 @@ public final class BearerAuthenticationConverter implements AuthenticationConver
     @Override
     public AuthenticationToken convert(HttpServletRequest request) {
         String authCredentials = AuthorizationExtractor.extract(request, AuthorizationType.BEARER);
-        AuthenticationToken token = new AuthenticationToken(authCredentials, authCredentials);
+        AuthenticationToken token = AuthenticationToken.of(authCredentials, authCredentials);
         return token;
     }
 

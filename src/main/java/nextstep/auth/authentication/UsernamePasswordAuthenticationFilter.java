@@ -1,6 +1,6 @@
 package nextstep.auth.authentication;
 
-import nextstep.auth.application.LoginMemberService;
+import nextstep.auth.application.AuthenticationUserService;
 import nextstep.auth.context.Authentication;
 import nextstep.auth.context.SecurityContextHolder;
 import nextstep.auth.domain.LoginUser;
@@ -9,9 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 
 public class UsernamePasswordAuthenticationFilter extends NonChainAuthenticationInterceptor {
 
-    public UsernamePasswordAuthenticationFilter(LoginMemberService loginMemberService,
+    public UsernamePasswordAuthenticationFilter(AuthenticationUserService authenticationUserService,
                                                 AuthenticationConverter authenticationConverter) {
-        super(loginMemberService, authenticationConverter);
+        super(authenticationUserService, authenticationConverter);
     }
 
     @Override
