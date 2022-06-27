@@ -1,7 +1,6 @@
 package nextstep.subway.unit;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -11,9 +10,8 @@ import static org.mockito.Mockito.when;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import javax.servlet.http.HttpServletResponse;
-import nextstep.auth.authentication.AuthenticationException;
 import nextstep.auth.token.JwtTokenProvider;
-import nextstep.auth.token.TokenAuthenticationInterceptor;
+import nextstep.auth.token.TokenAuthenticationInterceptor2;
 import nextstep.auth.token.TokenRequest;
 import nextstep.member.application.LoginMemberService;
 import nextstep.member.domain.LoginMember;
@@ -33,13 +31,13 @@ class TokenAuthenticationInterceptorTest {
 
     private LoginMemberService loginMemberService;
     private JwtTokenProvider jwtTokenProvider;
-    private TokenAuthenticationInterceptor interceptor;
+    private TokenAuthenticationInterceptor2 interceptor;
 
     @BeforeEach
     void setUp() {
         loginMemberService = mock(LoginMemberService.class);
         jwtTokenProvider = mock(JwtTokenProvider.class);
-        interceptor = new TokenAuthenticationInterceptor(loginMemberService, jwtTokenProvider);
+        interceptor = new TokenAuthenticationInterceptor2(loginMemberService, jwtTokenProvider);
     }
 
     @DisplayName("이메일이 일치하는 회원이 없는 경우 인증 예외 발생")
@@ -51,9 +49,10 @@ class TokenAuthenticationInterceptorTest {
         MockHttpServletResponse response = new MockHttpServletResponse();
 
         //when
+        boolean actual = interceptor.preHandle(createMockRequest(), response, new Object());
+
         //then
-        assertThatThrownBy(() -> interceptor.preHandle(createMockRequest(), response, new Object()))
-            .isInstanceOf(AuthenticationException.class);
+        assertThat(actual).isTrue();
     }
 
     @DisplayName("이메일은 일치하지만 패스워드가 일치하지 않는 경우 인증 예외 발생")
@@ -66,9 +65,10 @@ class TokenAuthenticationInterceptorTest {
         MockHttpServletResponse response = new MockHttpServletResponse();
 
         //when
+        boolean actual = interceptor.preHandle(createMockRequest(), response, new Object());
+
         //then
-        assertThatThrownBy(() -> interceptor.preHandle(createMockRequest(), response, new Object()))
-            .isInstanceOf(AuthenticationException.class);
+        assertThat(actual).isTrue();
     }
 
     @DisplayName("이메일과 패스워드가 모두 일치")
