@@ -8,10 +8,10 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import nextstep.auth.authentication.UserDetailService;
 import nextstep.auth.authentication.UsernamePasswordAuthenticationFilter2;
 import nextstep.auth.context.SecurityContext;
 import nextstep.auth.context.SecurityContextHolder;
-import nextstep.member.application.LoginMemberService;
 import nextstep.member.domain.LoginMember;
 import nextstep.member.domain.Member;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,12 +25,12 @@ class UsernamePasswordAuthenticationFilterTest {
     private static final String EMAIL = "email@email.com";
     private static final String PASSWORD = "password";
 
-    private LoginMemberService loginMemberService;
+    private UserDetailService loginMemberService;
     private UsernamePasswordAuthenticationFilter2 filter;
 
     @BeforeEach
     void setUp() {
-        loginMemberService = mock(LoginMemberService.class);
+        loginMemberService = mock(UserDetailService.class);
         filter = new UsernamePasswordAuthenticationFilter2(loginMemberService);
     }
 

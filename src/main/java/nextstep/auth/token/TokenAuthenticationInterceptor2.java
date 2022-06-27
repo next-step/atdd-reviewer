@@ -7,15 +7,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import nextstep.auth.authentication.AuthenticationException;
 import nextstep.auth.authentication.NonChainAuthenticationFilter;
-import nextstep.member.application.LoginMemberService;
-import nextstep.member.domain.LoginMember;
+import nextstep.auth.authentication.UserDetailService;
+import nextstep.auth.authentication.UserDetails;
 import org.springframework.http.MediaType;
 
 public class TokenAuthenticationInterceptor2 extends NonChainAuthenticationFilter {
-    private LoginMemberService loginMemberService;
+    private UserDetailService loginMemberService;
     private JwtTokenProvider jwtTokenProvider;
 
-    public TokenAuthenticationInterceptor2(LoginMemberService loginMemberService, JwtTokenProvider jwtTokenProvider) {
+    public TokenAuthenticationInterceptor2(UserDetailService loginMemberService, JwtTokenProvider jwtTokenProvider) {
         this.loginMemberService = loginMemberService;
         this.jwtTokenProvider = jwtTokenProvider;
     }
@@ -28,7 +28,7 @@ public class TokenAuthenticationInterceptor2 extends NonChainAuthenticationFilte
         String principal = tokenRequest.getEmail();
         String credentials = tokenRequest.getPassword();
 
-        LoginMember loginMember = loginMemberService.loadUserByUsername(principal);
+        UserDetails loginMember = loginMemberService.loadUserByUsername(principal);
 
         if (loginMember == null) {
             throw new AuthenticationException();

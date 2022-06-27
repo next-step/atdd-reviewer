@@ -8,8 +8,9 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import nextstep.auth.authentication.BasicAuthenticationFilter2;
+import nextstep.auth.authentication.UserDetailService;
+import nextstep.auth.authentication.UserDetails;
 import nextstep.auth.context.SecurityContextHolder;
-import nextstep.member.application.LoginMemberService;
 import nextstep.member.domain.LoginMember;
 import nextstep.member.domain.Member;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,12 +25,12 @@ class BasicAuthenticationFilterTest {
     private static final String PASSWORD = "password";
     private static final String BASIC_TOKEN = "BasicZW1haWxAZW1haWwuY29tOnBhc3N3b3Jk";
 
-    private LoginMemberService loginMemberService;
+    private UserDetailService loginMemberService;
     private BasicAuthenticationFilter2 filter;
 
     @BeforeEach
     void setUp() {
-        loginMemberService = mock(LoginMemberService.class);
+        loginMemberService = mock(UserDetailService.class);
         filter = new BasicAuthenticationFilter2(loginMemberService);
     }
 
@@ -53,7 +54,7 @@ class BasicAuthenticationFilterTest {
     @Test
     void not_valid_password() {
         //given
-        LoginMember loginMember = LoginMember.of(new Member(EMAIL, "wrongpassword", 10));
+        UserDetails loginMember = LoginMember.of(new Member(EMAIL, "wrongpassword", 10));
         when(loginMemberService.loadUserByUsername(anyString())).thenReturn(loginMember);
 
         MockHttpServletResponse response = new MockHttpServletResponse();

@@ -5,16 +5,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import nextstep.auth.context.Authentication;
 import nextstep.auth.context.SecurityContextHolder;
-import nextstep.member.application.LoginMemberService;
-import nextstep.member.domain.LoginMember;
 
 public class UsernamePasswordAuthenticationFilter2 extends NonChainAuthenticationFilter {
     public static final String USERNAME_FIELD = "username";
     public static final String PASSWORD_FIELD = "password";
 
-    private LoginMemberService loginMemberService;
+    private UserDetailService loginMemberService;
 
-    public UsernamePasswordAuthenticationFilter2(LoginMemberService loginMemberService) {
+    public UsernamePasswordAuthenticationFilter2(UserDetailService loginMemberService) {
         this.loginMemberService = loginMemberService;
     }
 
@@ -27,7 +25,7 @@ public class UsernamePasswordAuthenticationFilter2 extends NonChainAuthenticatio
         AuthenticationToken token = new AuthenticationToken(username, password);
 
         String principal = token.getPrincipal();
-        LoginMember loginMember = loginMemberService.loadUserByUsername(principal);
+        UserDetails loginMember = loginMemberService.loadUserByUsername(principal);
 
         if (loginMember == null) {
             throw new AuthenticationException();

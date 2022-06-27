@@ -2,8 +2,9 @@ package nextstep.member.domain;
 
 
 import java.util.List;
+import nextstep.auth.authentication.UserDetails;
 
-public class LoginMember {
+public class LoginMember implements UserDetails {
     private String email;
     private String password;
     private List<String> authorities;
@@ -37,6 +38,7 @@ public class LoginMember {
         return authorities;
     }
 
+    @Override
     public boolean checkPassword(String password) {
         return this.password.equals(password);
     }

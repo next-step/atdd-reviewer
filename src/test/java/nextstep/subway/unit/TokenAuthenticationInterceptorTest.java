@@ -10,10 +10,10 @@ import static org.mockito.Mockito.when;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import javax.servlet.http.HttpServletResponse;
+import nextstep.auth.authentication.UserDetailService;
 import nextstep.auth.token.JwtTokenProvider;
 import nextstep.auth.token.TokenAuthenticationInterceptor2;
 import nextstep.auth.token.TokenRequest;
-import nextstep.member.application.LoginMemberService;
 import nextstep.member.domain.LoginMember;
 import nextstep.member.domain.Member;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,13 +29,13 @@ class TokenAuthenticationInterceptorTest {
     private static final String PASSWORD = "password";
     public static final String JWT_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIiLCJuYW1lIjoiSm9obiBEb2UiLCJpYXQiOjE1MTYyMzkwMjJ9.ih1aovtQShabQ7l0cINw4k1fagApg3qLWiB8Kt59Lno";
 
-    private LoginMemberService loginMemberService;
+    private UserDetailService loginMemberService;
     private JwtTokenProvider jwtTokenProvider;
     private TokenAuthenticationInterceptor2 interceptor;
 
     @BeforeEach
     void setUp() {
-        loginMemberService = mock(LoginMemberService.class);
+        loginMemberService = mock(UserDetailService.class);
         jwtTokenProvider = mock(JwtTokenProvider.class);
         interceptor = new TokenAuthenticationInterceptor2(loginMemberService, jwtTokenProvider);
     }

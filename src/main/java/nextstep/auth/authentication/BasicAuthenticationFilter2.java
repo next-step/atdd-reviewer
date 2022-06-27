@@ -4,14 +4,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import nextstep.auth.context.Authentication;
 import nextstep.auth.context.SecurityContextHolder;
-import nextstep.member.application.LoginMemberService;
-import nextstep.member.domain.LoginMember;
 import org.apache.tomcat.util.codec.binary.Base64;
 
 public class BasicAuthenticationFilter2 extends ChainAuthenticationFilter {
-    private LoginMemberService loginMemberService;
+    private UserDetailService loginMemberService;
 
-    public BasicAuthenticationFilter2(LoginMemberService loginMemberService) {
+    public BasicAuthenticationFilter2(UserDetailService loginMemberService) {
         this.loginMemberService = loginMemberService;
     }
 
@@ -26,7 +24,7 @@ public class BasicAuthenticationFilter2 extends ChainAuthenticationFilter {
 
         AuthenticationToken token = new AuthenticationToken(principal, credentials);
 
-        LoginMember loginMember = loginMemberService.loadUserByUsername(token.getPrincipal());
+        UserDetails loginMember = loginMemberService.loadUserByUsername(token.getPrincipal());
         if (loginMember == null) {
             throw new AuthenticationException();
         }
