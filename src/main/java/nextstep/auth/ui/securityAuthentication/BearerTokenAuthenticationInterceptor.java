@@ -1,18 +1,20 @@
-package nextstep.auth.authentication;
+package nextstep.auth.ui.securityAuthentication;
 
+import nextstep.auth.authentication.AuthenticationException;
+import nextstep.auth.authentication.AuthenticationToken;
+import nextstep.auth.authentication.AuthorizationExtractor;
+import nextstep.auth.authentication.AuthorizationType;
 import nextstep.auth.context.Authentication;
-import nextstep.auth.context.SecurityContextHolder;
 import nextstep.auth.token.JwtTokenProvider;
-import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-public class BearerTokenAuthenticationFilter implements HandlerInterceptor {
-    private JwtTokenProvider jwtTokenProvider;
+public class BearerTokenAuthenticationInterceptor extends SecurityAuthenticationInterceptor {
+    private final JwtTokenProvider jwtTokenProvider;
 
-    public BearerTokenAuthenticationFilter(JwtTokenProvider jwtTokenProvider) {
+    public BearerTokenAuthenticationInterceptor(JwtTokenProvider jwtTokenProvider) {
         this.jwtTokenProvider = jwtTokenProvider;
     }
 
@@ -31,7 +33,7 @@ public class BearerTokenAuthenticationFilter implements HandlerInterceptor {
 
             Authentication authentication = new Authentication(principal, roles);
 
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+            afterCompletion(request, response, authentication);
 
             return true;
         } catch (Exception e) {
