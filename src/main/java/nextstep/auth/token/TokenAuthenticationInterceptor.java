@@ -21,8 +21,8 @@ public class TokenAuthenticationInterceptor extends NonChainAuthenticationInterc
     }
 
     @Override
-    public void afterAuthentication(LoginUser loginMember, HttpServletResponse response) throws Exception {
-        String token = jwtTokenProvider.createToken(loginMember.getEmail(), loginMember.getAuthorities());
+    public void afterAuthentication(LoginUser loginUser, HttpServletResponse response) throws Exception {
+        String token = jwtTokenProvider.createToken(loginUser.getEmail(), loginUser.getAuthorities());
         TokenResponse tokenResponse = new TokenResponse(token);
 
         String responseToClient = new ObjectMapper().writeValueAsString(tokenResponse);

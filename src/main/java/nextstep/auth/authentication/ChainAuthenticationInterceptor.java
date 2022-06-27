@@ -21,11 +21,9 @@ public abstract class ChainAuthenticationInterceptor implements HandlerIntercept
             AuthenticationToken token = authenticationConverter.convert(request);
             afterAuthentication(token);
             return true;
-
         } catch (Exception e) {
             return true;
         }
-
     }
 
 }

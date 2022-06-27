@@ -12,9 +12,11 @@ public class BasicAuthenticationFilter extends ChainAuthenticationInterceptor {
     public BasicAuthenticationFilter(AuthenticationUserService loginMemberService,
                                      AuthenticationConverter authenticationConverter) {
         super(authenticationConverter);
+
         this.authenticationUserService = loginMemberService;
     }
 
+    @Override
     public void afterAuthentication(AuthenticationToken token) {
         LoginUser loginUser = authenticationUserService.loadUserByUsername(token.getPrincipal());
         if (loginUser == null) {

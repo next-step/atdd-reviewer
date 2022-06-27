@@ -14,8 +14,9 @@ public class LoginMemberService implements AuthenticationUserService {
         this.memberRepository = memberRepository;
     }
 
-    public LoginMember loadUserByUsername(String email) {
-        Member member = memberRepository.findByEmail(email).orElseThrow(RuntimeException::new);
+    @Override
+    public LoginMember loadUserByUsername(String username) {
+        Member member = memberRepository.findByEmail(username).orElseThrow(RuntimeException::new);
         return LoginMember.of(member);
     }
 }
