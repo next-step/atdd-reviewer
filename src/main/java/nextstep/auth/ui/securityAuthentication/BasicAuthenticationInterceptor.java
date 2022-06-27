@@ -1,20 +1,23 @@
-package nextstep.auth.authentication;
+package nextstep.auth.ui.securityAuthentication;
 
+import nextstep.auth.application.UserDetail;
+import nextstep.auth.application.UserDetailService;
+import nextstep.auth.authentication.AuthenticationException;
+import nextstep.auth.authentication.AuthenticationToken;
+import nextstep.auth.authentication.AuthorizationExtractor;
+import nextstep.auth.authentication.AuthorizationType;
 import nextstep.auth.context.Authentication;
-import nextstep.auth.context.SecurityContextHolder;
 import nextstep.member.application.LoginMemberService;
-import nextstep.member.domain.LoginMember;
 import org.apache.tomcat.util.codec.binary.Base64;
-import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class BasicAuthenticationFilter implements HandlerInterceptor {
-    private LoginMemberService loginMemberService;
+public class BasicAuthenticationInterceptor extends SecurityAuthenticationInterceptor {
+    private final UserDetailService userDetailService;
 
-    public BasicAuthenticationFilter(LoginMemberService loginMemberService) {
-        this.loginMemberService = loginMemberService;
+    public BasicAuthenticationInterceptor(UserDetailService userDetailService) {
+        this.userDetailService = userDetailService;
     }
 
     @Override
@@ -29,18 +32,18 @@ public class BasicAuthenticationFilter implements HandlerInterceptor {
 
             AuthenticationToken token = new AuthenticationToken(principal, credentials);
 
-            LoginMember loginMember = loginMemberService.loadUserByUsername(token.getPrincipal());
-            if (loginMember == null) {
+            UserDetail userDetail = userDetailService.loadUserByUserName(token.getPrincipal());
+            if (userDetail == null) {
                 throw new AuthenticationException();
             }
 
-            if (!loginMember.checkPassword(token.getCredentials())) {
+            if (!userDetail.checkPassword(token.getCredentials())) {
                 throw new AuthenticationException();
             }
 
-            Authentication authentication = new Authentication(loginMember.getEmail(), loginMember.getAuthorities());
+            Authentication authentication = new Authentication(userDetail.getEmail(), userDetail.getAuthorities());
 
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+            afterCompletion(request, response, authentication);
 
             return true;
         } catch (Exception e) {
