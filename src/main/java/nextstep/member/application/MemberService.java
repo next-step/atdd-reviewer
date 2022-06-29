@@ -46,4 +46,5 @@ public class MemberService {
     public void deleteMember(String email) {
         memberRepository.deleteByEmail(email);
     }
+
 }
