@@ -15,7 +15,7 @@ public class UsernamePasswordAuthenticationFilter extends NonChainAuthentication
     }
 
     @Override
-    public void afterAuthentication(LoginUser loginUser, HttpServletResponse response) {
+    public void afterComplete(LoginUser loginUser, HttpServletResponse response) {
         Authentication authentication = new Authentication(loginUser.getEmail(), loginUser.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }

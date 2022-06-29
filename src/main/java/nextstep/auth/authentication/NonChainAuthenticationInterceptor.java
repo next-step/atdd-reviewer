@@ -18,7 +18,7 @@ public abstract class NonChainAuthenticationInterceptor implements HandlerInterc
         this.authenticationConverter = authenticationConverter;
     }
 
-    public abstract void afterAuthentication(LoginUser loginUser, HttpServletResponse response) throws Exception;
+    public abstract void afterComplete(LoginUser loginUser, HttpServletResponse response) throws Exception;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -34,7 +34,7 @@ public abstract class NonChainAuthenticationInterceptor implements HandlerInterc
             throw new AuthenticationException();
         }
 
-        afterAuthentication(loginUser, response);
+        afterComplete(loginUser, response);
 
         return false;
     }
