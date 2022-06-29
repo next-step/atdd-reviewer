@@ -13,13 +13,13 @@ public abstract class ChainAuthenticationInterceptor implements HandlerIntercept
         this.authenticationConverter = authenticationConverter;
     }
 
-    public abstract void afterAuthentication(AuthenticationToken token) throws Exception;
+    public abstract void afterComplete(AuthenticationToken token) throws Exception;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         try {
             AuthenticationToken token = authenticationConverter.convert(request);
-            afterAuthentication(token);
+            afterComplete(token);
             return true;
         } catch (Exception e) {
             return true;

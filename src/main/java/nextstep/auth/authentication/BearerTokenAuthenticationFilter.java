@@ -17,7 +17,7 @@ public class BearerTokenAuthenticationFilter extends ChainAuthenticationIntercep
     }
 
     @Override
-    public void afterAuthentication(AuthenticationToken token) {
+    public void afterComplete(AuthenticationToken token) {
         if (!jwtTokenProvider.validateToken(token.getPrincipal())) {
             throw new AuthenticationException();
         }

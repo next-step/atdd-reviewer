@@ -17,7 +17,7 @@ public class BasicAuthenticationFilter extends ChainAuthenticationInterceptor {
     }
 
     @Override
-    public void afterAuthentication(AuthenticationToken token) {
+    public void afterComplete(AuthenticationToken token) {
         LoginUser loginUser = authenticationUserService.loadUserByUsername(token.getPrincipal());
         if (loginUser == null) {
             throw new AuthenticationException();
